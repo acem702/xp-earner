@@ -43,6 +43,8 @@ const userSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Task',
             },
+            // (no duplicates)
+            unique: true,
         },
     ],
     xp_points: {

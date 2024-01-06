@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const Task = require('./task.model');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -42,7 +41,6 @@ const userSchema = new mongoose.Schema({
             task_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Task',
-                unique: true,
             },
         },
     ],
@@ -52,14 +50,12 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-// calculate the xp points
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('completed_tasks')) return next();
-
-    const tasks = await Task.find({ _id: this.completed_tasks });
-
-    this.xp_points += tasks.xp_points;
-    next();
+userSchema.pre(/^find/, function () {
+    this.populate({
+        path: 'completed_tasks.task_id',
+        select: 'name description xp_points',
+        model: 'Task',
+    });
 });
 
 // pre-save middleware to encrypt the password

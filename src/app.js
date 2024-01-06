@@ -1,8 +1,9 @@
 const express = require('express');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes/index.route');
 const globalErrorHandler = require('./controllers/error.controller');
 const AppError = require('./utils/AppError.util');
-const morgan = require('morgan');
 const config = require('./config/env.config');
 
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 // Body parser, reading data from body into req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Development logging
 if (config.nodeEnv === 'development') {

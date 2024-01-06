@@ -147,7 +147,24 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 exports.logout = catchAsync(async (req, res, next) => {
     // set user.logoutAt = Date.now()
 
-    const user = await User.findById(req.user.id);
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies && req.cookies.JWT) {
+        token = req.cookies.JWT;
+    }
+
+    if (!token) {
+        return next(new AppError('You are not logged in to logout!'), 401);
+    }
+
+    // +[2] Verification token
+    const decoded = await promisify(jwt.verify)(token, config.jwtSecret);
+
+    const user = await User.findById(decoded.id);
     user.logoutAt = Date.now();
     await user.save({ validateBeforeSave: false });
 

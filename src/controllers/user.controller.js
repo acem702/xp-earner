@@ -24,6 +24,18 @@ exports.createUser = catchAsync(async (req, res, next) => {
     });
 });
 
+// *** get me *** \\
+exports.getMe = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id).populate('tasks');
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            data: user,
+        },
+    });
+});
+
 // *** user complete a task ***
 exports.completeTask = catchAsync(async (req, res, next) => {
     // [1] get task id from req.params

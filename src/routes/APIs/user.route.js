@@ -9,7 +9,10 @@ router
     .get(userController.getAllUsers)
     .post(userController.createUser);
 
+router.get('/me', authController.protect, userController.getMe);
 router.route('/:id').get(userController.getUser);
+
+// *** get me *** \\
 
 // *** user complete a task ***
 router.patch(

@@ -1,0 +1,50 @@
+{
+    "name": "xp-earner",
+    "version": "1.0.0",
+    "description": "full-stack application that allows users to explore and choose from a set of features, each associated with specific tasks. Users can complete these tasks to earn XP",
+    "main": "server.js",
+    "scripts": {
+        "start:dev": "nodemon src/server.js",
+        "start": "node src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Adosh74/xp-earner.git"
+    },
+    "keywords": [
+        "node.js",
+        "express",
+        "react",
+        "mongodb",
+        "jwt"
+    ],
+    "author": "Mohamed Shebl",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Adosh74/xp-earner/issues"
+    },
+    "homepage": "https://github.com/Adosh74/xp-earner#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "5",
+        "slugify": "^1.6.6",
+        "validator": "^13.11.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^5.1.2",
+        "eslint-plugin-react": "^7.33.2",
+        "morgan": "^1.10.0",
+        "nodemon": "^3.0.2",
+        "prettier": "^3.1.1"
+    }
+}

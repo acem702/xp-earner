@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: '',
     });
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -16,8 +21,28 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Perform form submission logic here
-        console.log(formData);
+
+        // call api to register user with the data in the form
+        axios.post('http://localhost:4000/api/v1/signup',
+        {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            passwordConfirm: formData.confirmPassword,
+        },
+        {
+            withCredentials: true,
+            credentials: 'include'
+        },
+        ).then((res) => {
+            console.log(res);
+            // redirect to home page
+            navigate('/');
+            alert('User registered successfully');
+        }).catch((err) => {
+            console.log(err);
+            alert(err.response.data.message);
+        })
     };
 
     return (

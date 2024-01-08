@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, res) => {
     const cookieOption = {
         // *** convert days to milliseconds => 10 days *** \\
         expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
+        httpOnly: false,
     };
 
     if (config.nodeEnv === 'production') cookieOption.secure = true;

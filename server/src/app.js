@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const routes = require('./routes/index.route');
 const globalErrorHandler = require('./controllers/error.controller');
 const AppError = require('./utils/AppError.util');
@@ -9,6 +10,9 @@ const config = require('./config/env.config');
 const app = express();
 
 // *** Middleware *** //
+
+// Enable CORS
+app.use(cors());
 
 // Body parser, reading data from body into req.body
 app.use(express.json());

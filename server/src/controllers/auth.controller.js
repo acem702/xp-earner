@@ -65,9 +65,16 @@ exports.login = catchAsync(async (req, res, next) => {
     }
 
     // check if user is inactive 1 month ago, then make xp_points = 0 and completed_tasks = []
-    if (user.logoutAt <= Date.now() - 30 * 24 * 60 * 60 * 1000) {
+    if (
+        user.logoutAt &&
+        user.logoutAt <= Date.now() - 30 * 24 * 60 * 60 * 1000
+    ) {
         user.xp_points = 0;
         user.completed_tasks = [];
+        user.logoutAt = null;
+        user.save({ validateBeforeSave: false });
+    } else {
+        user.logoutAt = null;
         user.save({ validateBeforeSave: false });
     }
 

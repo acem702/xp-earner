@@ -51,7 +51,7 @@ exports.completeTask = catchAsync(async (req, res, next) => {
     const user = await User.findById(userId);
 
     const taskExist = user.completed_tasks.some(
-        (el) => el.task_id.toString() === taskId.toString(),
+        (el) => el.task_id._id.toString() === taskId.toString(),
     );
 
     if (taskExist) {

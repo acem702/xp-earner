@@ -66,16 +66,13 @@ exports.login = catchAsync(async (req, res, next) => {
 
     // check if user is inactive 1 month ago, then make xp_points = 0 and completed_tasks = []
     if (
-        user.logoutAt &&
-        user.logoutAt <= Date.now() - 30 * 24 * 60 * 60 * 1000
+        user.lastActivity &&
+        user.lastActivity <= Date.now() - 30 * 24 * 60 * 60 * 1000
     ) {
         user.xp_points = 0;
         user.completed_tasks = [];
-        user.logoutAt = null;
-        user.save({ validateBeforeSave: false });
-    } else {
-        user.logoutAt = null;
-        user.save({ validateBeforeSave: false });
+        user.lastActivity = Date.now();
+        await user.save({ validateBeforeSave: false });
     }
 
     createSendToken(user, 200, res);
@@ -152,8 +149,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 // *** logout user ***
 exports.logout = catchAsync(async (req, res, next) => {
-    // set user.logoutAt = Date.now()
-
     let token;
     if (
         req.headers.authorization &&
@@ -172,7 +167,6 @@ exports.logout = catchAsync(async (req, res, next) => {
     const decoded = await promisify(jwt.verify)(token, config.jwtSecret);
 
     const user = await User.findById(decoded.id);
-    user.logoutAt = Date.now();
     await user.save({ validateBeforeSave: false });
 
     res.cookie('JWT', 'loggedout', {
@@ -181,4 +175,43 @@ exports.logout = catchAsync(async (req, res, next) => {
     });
 
     res.status(200).json({ status: 'success' });
+});
+
+// *** put lastActivity to now *** \\
+exports.putLastActivity = catchAsync(async (req, res, next) => {
+    // +[1] get token from cookies or headers if exist
+    let token;
+    if (req.cookies && req.cookies.JWT) {
+        token = req.cookies.JWT;
+    } else if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
+    // +[2] if user logged out then return next()
+    if (!token || token === 'loggedout') {
+        return next();
+    }
+
+    // +[3] Verification token
+    const decoded = await promisify(jwt.verify)(token, config.jwtSecret);
+
+    // +[4] Check if user still exist
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) {
+        return next(
+            new AppError(
+                'The user belonging to this token does no longer exist',
+                401,
+            ),
+        );
+    }
+
+    // +[5] put lastActivity to now
+    freshUser.lastActivity = Date.now();
+    await freshUser.save({ validateBeforeSave: false });
+
+    next();
 });

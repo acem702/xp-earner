@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
         },
     },
     passwordChangedAt: Date,
-    logoutAt: Date,
+    lastActivity: {
+        type: Date,
+        default: Date.now(),
+    },
     // tasks completed and xp points
     completed_tasks: [
         {

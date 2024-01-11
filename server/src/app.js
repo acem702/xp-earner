@@ -19,6 +19,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Serving static files
+app.use(express.static(`${process.cwd()}/public`));
+
 // Development logging
 if (config.nodeEnv === 'development') {
     app.use(morgan('dev'));

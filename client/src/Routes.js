@@ -5,6 +5,7 @@ import Register from './pages/auth/register/Register';
 import Profile from './pages/profile/Profile';
 import Task from './pages/task/Task';
 import Tasks from './pages/tasks/Tasks';
+import Guard from './guards/Guard';
 
 export const routes = createBrowserRouter([
     {
@@ -16,12 +17,17 @@ export const routes = createBrowserRouter([
                 element: <Tasks />,
             },
             {
-                path: '/login',
-                element: <Login />,
-            },
-            {
-                path: '/register',
-                element: <Register />,
+                element: <Guard />,
+                children: [
+                    {
+                        path: '/login',
+                        element: <Login />,
+                    },
+                    {
+                        path: '/register',
+                        element: <Register />,
+                    },
+                ],
             },
             {
                 path: '/profile',

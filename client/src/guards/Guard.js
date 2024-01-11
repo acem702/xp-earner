@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { isLogged } from '../services/auth';
 
-const Guard = () => {
+const AuthGuard = () => {
     if (!isLogged()) {
         return <Outlet />;
     } else {
@@ -9,4 +9,4 @@ const Guard = () => {
     }
 };
 
-export default Guard;
+export default AuthGuard;

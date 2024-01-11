@@ -6,7 +6,7 @@
   "scripts": {
     "build:server": "cd server && npm i",
     "build:client": "cd client && npm i",
-    "build": "npm i && npm-run-all --parallel build:server build:client build:upload:server",
+    "build": "npm i && npm-run-all --parallel build:server build:client",
     "start:server": "cd server && npm run start",
     "start:client": "cd client && npm run start",
     "start": "npm-run-all --parallel start:server start:client"

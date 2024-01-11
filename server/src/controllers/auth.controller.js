@@ -40,6 +40,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        avatar: !req.file ? 'default.png' : req.file.filename,
         passwordConfirm: req.body.passwordConfirm,
     });
 

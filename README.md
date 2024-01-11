@@ -66,13 +66,16 @@ git clone https://github.com/Adosh74/xp-earner
 # Move into the project directory
 cd xp-earner
 
+# Install dependencies
+npm install
+
 # create a .env file in the server folder and add the following
 NODE_ENV=development
 PORT=4000
 DATABASE=<enter your database url>
 JWT_SECRET=<enter your secret>
 
-# Install dependencies
+# Install dependencies for the client and server
 npm run build
 
 # Run the app

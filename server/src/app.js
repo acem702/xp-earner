@@ -12,7 +12,7 @@ const app = express();
 // *** Middleware *** //
 
 // Enable CORS
-app.use(cors({ origin: 'https://tasks.ekehi.network', credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 
 // Body parser, reading data from body into req.body
 app.use(express.json());

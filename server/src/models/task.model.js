@@ -14,6 +14,7 @@ const taskSchema = new mongoose.Schema(
             required: [true, 'A task must have a description'],
             trim: true,
         },
+        links: [String],
         xp_points: {
             type: Number,
             required: [true, 'A task must have a xp'],

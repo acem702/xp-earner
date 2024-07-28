@@ -38,6 +38,14 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    lastDailyClaim: {
+        type: Date,
+        default: null
+    },
+    last12HourClaim: {
+        type: Date,
+        default: null
+    }
     // tasks completed and xp points
     completed_tasks: [
         {

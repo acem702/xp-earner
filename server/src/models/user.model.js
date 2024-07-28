@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     last12HourClaim: {
         type: Date,
         default: null
-    }
+    },
     // tasks completed and xp points
     completed_tasks: [
         {

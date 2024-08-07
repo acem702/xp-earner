@@ -31,7 +31,7 @@ router.post('/claim-daily-reward', authController.protect, async (req, res) => {
             const points = getRandomPoints(10000, 20000);
             user.xp_points += points;
             user.lastDailyClaim = now.startOf('day').toDate(); // Set to start of current day
-            await user.save();
+            await user.save({ validateBeforeSave: false });
         } else {
             nextDailyClaim = moment(user.lastDailyClaim).startOf('day').add(1, 'day');
         }
@@ -54,7 +54,7 @@ router.post('/claim-12hour-reward', authController.protect, async (req, res) => 
             const points = getRandomPoints(10000, 20000);
             user.xp_points += points;
             user.last12HourClaim = now.toDate();
-            await user.save();
+            await user.save({ validateBeforeSave: false });
         } else {
             next12HourClaim = moment(user.last12HourClaim).add(12, 'hours');
         }

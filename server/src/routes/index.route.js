@@ -20,7 +20,7 @@ router.use('/tasks', taskRoutes);
 router.use('/users', userRoutes);
 
 // Daily reward endpoint
-router.post('/claim-daily-reward', async (req, res) => {
+router.post('/claim-daily-reward', authControllor.protect, async (req, res) => {
     const userId = req.body.userId;
     try {
         const user = await User.findById(userId);
@@ -43,7 +43,7 @@ router.post('/claim-daily-reward', async (req, res) => {
 });
 
 // 12-hour reward endpoint
-router.post('/claim-12hour-reward', async (req, res) => {
+router.post('/claim-12hour-reward', authControllor.protect, async (req, res) => {
     const userId = req.body.userId;
     try {
         const user = await User.findById(userId);

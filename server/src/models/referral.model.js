@@ -2,8 +2,8 @@
 const mongoose = require('mongoose');
 
 const referralSchema = new mongoose.Schema({
-  userId: { type: number, unique: true, required: true },
-  referralId: { type: number, required: true },
+  userId: { type: Number, unique: true, required: true },
+  referralId: { type: Number, required: true },
   date: { type: Date, required: true }
 });
 

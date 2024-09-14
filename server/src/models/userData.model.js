@@ -6,4 +6,4 @@ const userDataSchema = new mongoose.Schema({
   balance: { type: Number, required: true }
 });
 
-module.exports = mongoose.model('UserData', userDataSchema, 'userData');
+module.exports = mongoose.model('userData', userDataSchema, 'userData');
